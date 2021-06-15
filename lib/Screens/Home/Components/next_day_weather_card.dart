@@ -1,8 +1,23 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:weatherAppMobile/Models/city_weather_details.dart';
+import 'package:weatherAppMobile/Models/forecast_weather.dart';
+import 'package:weatherAppMobile/Screens/Home/Components/min_max_tile.dart';
 
-class WeatherCard extends StatelessWidget {
+class NextDayWeatherCard extends StatelessWidget {
+  final Daily forecastData;
+  final DateFormat dateFormat = DateFormat('E dd MMMM', 'es');
+
+  NextDayWeatherCard({@required this.forecastData});
+
+  String formatDateFromUnixTime() {
+    DateTime dateTime =
+        DateTime.fromMillisecondsSinceEpoch(forecastData.dt * 1000);
+    return dateFormat.format(dateTime.toUtc());
+  }
+
   @override
   Widget build(BuildContext context) {
     double cardWidth = MediaQuery.of(context).size.width * 0.28;
@@ -29,33 +44,43 @@ class WeatherCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Martes 18',
+                SizedBox(
+                  height: 2,
                 ),
-                /*Text(
-                  '17 sep',
-                ),*/
+                Text(
+                  formatDateFromUnixTime(),
+                ),
                 SizedBox(
                   height: 14,
                 ),
                 Icon(
                   Icons.wb_sunny_outlined,
                   size: 60,
-                  //color: Colors.white,
+                  //color: Colors.amberAccent,
                 ),
                 SizedBox(
-                  height: 14,
+                  height: 10,
                 ),
                 Text(
-                  ' 30°',
+                  ' ${forecastData.feelsLike.day.ceil()}°',
                   style: TextStyle(
                     fontSize: 30.0,
                   ),
                 ),
                 Text(
-                  'Despejado',
+                  '${forecastData.weather.first.main}',
                   style: TextStyle(
                     fontSize: 15.0,
+                  ),
+                ),
+                Expanded(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: MinMaxTile(
+                      max: forecastData.temp.max,
+                      min: forecastData.temp.min,
+                      center: false,
+                    ),
                   ),
                 ),
               ],

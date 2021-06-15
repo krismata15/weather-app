@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:weatherAppMobile/Screens/Home/Components/min_max_tile.dart';
 
 class MainWeatherView extends StatelessWidget {
+  final double temp;
+  final double min, max;
+  final String weather;
+
+  MainWeatherView({this.temp, this.min, this.max, this.weather});
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Center(
           child: Text(
-            ' 22°',
+            ' ${temp.ceil()}°',
             style: TextStyle(
               fontSize: 150.0,
               fontWeight: FontWeight.w500,
@@ -16,9 +23,9 @@ class MainWeatherView extends StatelessWidget {
         ),
         Center(
           child: Text(
-            'Despejado',
+            weather,
             style: TextStyle(
-              fontSize: 28.0,
+              fontSize: 32.0,
               //color: Colors.white.withOpacity(0.7),
             ),
           ),
@@ -26,47 +33,9 @@ class MainWeatherView extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.arrow_drop_down_sharp,
-                  size: 30,
-                  //color: Colors.white,
-                ),
-                Text(
-                  '12°',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Row(
-              children: [
-                Icon(
-                  Icons.arrow_drop_up_sharp,
-                  size: 30,
-                  //color: Colors.white,
-                ),
-                Text(
-                  '25°',
-                  style: TextStyle(
-                    //color: Colors.white,
-                    fontSize: 18.0,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: 18,
-            ),
-          ],
+        MinMaxTile(
+          max: max,
+          min: min,
         ),
         SizedBox(
           height: 10,

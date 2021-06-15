@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:weatherAppMobile/Models/weather.dart';
+import 'package:weatherAppMobile/Services/weather_service.dart';
 import './Components/export_components.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -9,6 +11,31 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool type = true;
   Color baseColor = Colors.white;
+  bool isLoading = true;
+  WeatherData weatherData;
+
+  @override
+  void initState() {
+    super.initState();
+    getDetailWeather();
+  }
+
+  void getDetailWeather() async {
+    weatherData = await WeatherService.getCityWeatherWithForecast();
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  List<Widget> forecastView() {
+    return weatherData.cityWeatherDetails.daily
+        .map((e) => NextDayWeatherCard(
+              forecastData: e,
+            ))
+        .toList()
+        .sublist(1, 4);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,54 +63,59 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         extendBodyBehindAppBar: true,
-        body: AnimatedBackground(
-          child: RefreshIndicator(
-            onRefresh: () async {
-              await Future.delayed(Duration(seconds: 1));
-            },
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 22.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+        body: isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : AnimatedBackground(
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    await Future.delayed(Duration(seconds: 1));
+                  },
+                  child: ListView(
                     children: [
-                      LocationText(
-                        city: 'Caracas',
-                        countryCode: 'VE',
+                      Padding(
+                        padding: const EdgeInsets.only(left: 22.0, right: 22.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            LocationText(
+                              city: weatherData.cityWeather.name,
+                              countryCode: weatherData.cityWeather.sys.country,
+                            ),
+                            DateTextFormatted(),
+                          ],
+                        ),
                       ),
-                      DateTextFormatted(),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.05,
+                      ),
+                      MainWeatherView(
+                        temp: weatherData.cityWeather.main.temp,
+                        weather: weatherData.cityWeather.weather.first.main,
+                        max: weatherData.cityWeather.main.tempMax,
+                        min: weatherData.cityWeather.main.tempMin,
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.10,
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: forecastView(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.05,
-                ),
-                MainWeatherView(),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.10,
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        WeatherCard(),
-                        WeatherCard(),
-                        WeatherCard(),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }

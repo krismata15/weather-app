@@ -8,28 +8,31 @@ class LocationText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      textBaseline: TextBaseline.alphabetic,
-      children: [
-        RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-            style: GoogleFonts.openSans(
-              fontSize: 42.0,
-              fontWeight: FontWeight.bold,
-            ),
-            children: [
-              TextSpan(text: '$city, '),
-              TextSpan(
-                text: countryCode,
-                style: TextStyle(
-                  fontSize: 36,
-                ),
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Row(
+        textBaseline: TextBaseline.alphabetic,
+        children: [
+          RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              style: GoogleFonts.openSans(
+                fontSize: 42.0,
+                fontWeight: FontWeight.bold,
               ),
-            ],
+              children: [
+                TextSpan(text: '$city, '),
+                TextSpan(
+                  text: countryCode,
+                  style: TextStyle(
+                    fontSize: 40,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

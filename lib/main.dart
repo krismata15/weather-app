@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:weatherAppMobile/Screens/Home/home_screen.dart';
+import 'package:weatherAppMobile/Services/weather_service.dart';
 
 void main() {
   initializeDateFormatting();

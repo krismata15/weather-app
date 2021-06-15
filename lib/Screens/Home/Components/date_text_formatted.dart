@@ -3,13 +3,13 @@ import 'package:intl/intl.dart';
 
 class DateTextFormatted extends StatelessWidget {
   final String date =
-      DateFormat('dd MMMM yyyy', 'es').format(DateTime.now().toLocal());
+      DateFormat('EEEE dd MMMM yyyy', 'es').format(DateTime.now().toLocal());
   @override
   Widget build(BuildContext context) {
     return Text(
       date,
       style: TextStyle(
-        fontSize: 16.0,
+        fontSize: 18.0,
         color: Colors.white.withOpacity(0.7),
       ),
     );
