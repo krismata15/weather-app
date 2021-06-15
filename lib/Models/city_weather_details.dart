@@ -331,7 +331,7 @@ class Current {
     pressure = json['pressure'];
     humidity = json['humidity'];
     dewPoint = json['dew_point'];
-    uvi = json['uvi'];
+    uvi = (json['uvi'] as num).toDouble();
     clouds = json['clouds'];
     visibility = json['visibility'];
     windSpeed = json['wind_speed'];
