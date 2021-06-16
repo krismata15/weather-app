@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:weatherAppMobile/Models/city_weather.dart';
 import 'package:weatherAppMobile/Models/city_weather_details.dart';
 import 'package:weatherAppMobile/utils/utils_error_handler.dart';
-import 'package:weatherAppMobile/Models/weather.dart';
+import 'package:weatherAppMobile/Models/weather_data.dart';
 
 class WeatherService {
   static BaseOptions options = BaseOptions(
@@ -22,7 +22,6 @@ class WeatherService {
       );
 
       if (response.statusCode == 200) {
-        print(response.data);
         cityWeather = CityWeather.fromJson(response.data);
       }
 
@@ -35,20 +34,43 @@ class WeatherService {
     }
   }
 
-  static Future<WeatherData> getCityWeatherWithForecast() async {
+  static Future<WeatherData> getCityWeatherWithForecast(
+      Map<String, double> searchParameter) async {
     String url = '/city-weather-forecast';
     WeatherData weather;
     try {
       Response response = await dio.get(
         url,
+        queryParameters: searchParameter,
       );
 
       if (response.statusCode == 200) {
-        print(response.data);
         weather = WeatherData.fromJson(response.data);
       }
 
       return weather;
+    } catch (e) {
+      if (e is DioError) {
+        handleDioErrors(e);
+      }
+      rethrow;
+    }
+  }
+
+  static Future<List<CityWeather>> getCityRecommendations(String query) async {
+    String url = '/city-weather-list';
+    CityWeatherList cities = CityWeatherList();
+    try {
+      Response response =
+          await dio.get(url, queryParameters: {'busqueda': query});
+
+      if (response.statusCode == 200) {
+        if (response.data['list'] != null) {
+          cities = CityWeatherList.fromJson(response.data);
+        }
+      }
+
+      return cities.citiesWeather;
     } catch (e) {
       if (e is DioError) {
         handleDioErrors(e);
@@ -66,7 +88,6 @@ class WeatherService {
       );
 
       if (response.statusCode == 200) {
-        print(response.data);
         cityWeatherDetails = CityWeatherDetails.fromJson(response.data);
       }
 

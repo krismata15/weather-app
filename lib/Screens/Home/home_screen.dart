@@ -1,40 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:weatherAppMobile/Models/weather.dart';
-import 'package:weatherAppMobile/Services/weather_service.dart';
+import 'package:weatherAppMobile/Logic/WeatherData/weather_data_logic.dart';
+import 'package:weatherAppMobile/Logic/WeatherData/weather_state.dart';
+import 'package:weatherAppMobile/Logic/WeatherSearch/weather_search_logic.dart';
+import 'package:weatherAppMobile/Models/city_weather.dart';
+import 'package:weatherAppMobile/Models/weather_data.dart';
+import 'package:weatherAppMobile/Screens/Search/search_screen.dart';
 import './Components/export_components.dart';
 
 class HomeScreen extends StatefulWidget {
+  final CityWeather cityWeather;
+
+  HomeScreen({this.cityWeather});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool type = true;
-  Color baseColor = Colors.white;
-  bool isLoading = true;
-  WeatherData weatherData;
+  WeatherDataLogicView logicViewWeather;
+  WeatherSearchLogicView weatherSearchLogic =
+      WeatherSearchLogicView.initialSearchState();
 
   @override
   void initState() {
     super.initState();
-    getDetailWeather();
+    logicViewWeather =
+        WeatherDataLogicView.initialLocalData(widget.cityWeather);
   }
 
-  void getDetailWeather() async {
-    weatherData = await WeatherService.getCityWeatherWithForecast();
-
-    setState(() {
-      isLoading = false;
-    });
-  }
-
-  List<Widget> forecastView() {
-    return weatherData.cityWeatherDetails.daily
-        .map((e) => NextDayWeatherCard(
-              forecastData: e,
-            ))
-        .toList()
-        .sublist(1, 4);
+  void searchOption() async {
+    await showSearch(
+      context: context,
+      delegate: WeatherSearch(
+        logic: weatherSearchLogic,
+      ),
+    );
   }
 
   @override
@@ -42,11 +42,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return Theme(
       data: Theme.of(context).copyWith(
         textTheme: Theme.of(context).textTheme.apply(
-              bodyColor: baseColor,
-              displayColor: baseColor,
+              bodyColor: Colors.white,
+              displayColor: Colors.white,
             ),
         iconTheme: Theme.of(context).iconTheme.copyWith(
-              color: baseColor,
+              color: Colors.white,
             ),
       ),
       child: Scaffold(
@@ -58,65 +58,105 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icon(
                 Icons.search,
               ),
-              onPressed: () {},
+              onPressed: searchOption,
             ),
           ],
         ),
         extendBodyBehindAppBar: true,
-        body: isLoading
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : AnimatedBackground(
-                child: RefreshIndicator(
-                  onRefresh: () async {
-                    await Future.delayed(Duration(seconds: 1));
-                  },
-                  child: ListView(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 22.0, right: 22.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            LocationText(
-                              city: weatherData.cityWeather.name,
-                              countryCode: weatherData.cityWeather.sys.country,
-                            ),
-                            DateTextFormatted(),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.05,
-                      ),
-                      MainWeatherView(
-                        temp: weatherData.cityWeather.main.temp,
-                        weather: weatherData.cityWeather.weather.first.main,
-                        max: weatherData.cityWeather.main.tempMax,
-                        min: weatherData.cityWeather.main.tempMin,
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.10,
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: forecastView(),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+        body: AnimatedBackground(
+          child: RefreshIndicator(
+            onRefresh: () async {
+              logicViewWeather.getSelectedOption(widget.cityWeather);
+            },
+            child: StreamBuilder<WeatherState>(
+                stream: logicViewWeather.weatherStream,
+                builder: (context, AsyncSnapshot<WeatherState> snapshot) {
+                  if (snapshot.hasData) {
+                    final state = snapshot.data;
+                    if (state is WeatherLoadInProgress) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+
+                    if (state is WeatherLoadSuccessful) {
+                      WeatherData weatherData = state.weatherData;
+                      return HomeBodyWeather(
+                        weatherData: weatherData,
+                      );
+                    }
+
+                    if (state is WeatherLoadError) {
+                      return Text('Error loading ${state.error.toString()}');
+                    }
+                  }
+
+                  return SizedBox.expand();
+                }),
+          ),
+        ),
       ),
+    );
+  }
+}
+
+class HomeBodyWeather extends StatelessWidget {
+  final WeatherData weatherData;
+
+  HomeBodyWeather({@required this.weatherData}) : assert(weatherData != null);
+
+  List<Widget> forecastView(WeatherData weatherData) {
+    return weatherData.cityWeatherDetails.daily
+        .map((e) => NextDayWeatherCard(
+              forecastData: e,
+            ))
+        .toList()
+        .sublist(1, 4);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 22.0, right: 22.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              LocationText(
+                city: weatherData.cityWeather.name,
+                countryCode: weatherData.cityWeather.sys.country,
+              ),
+              DateTextFormatted(),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.05,
+        ),
+        MainWeatherView(
+          temp: weatherData.cityWeather.main.temp,
+          weather: weatherData.cityWeather.weather.first.main,
+          max: weatherData.cityWeather.main.tempMax,
+          min: weatherData.cityWeather.main.tempMin,
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.10,
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: forecastView(weatherData),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+      ],
     );
   }
 }

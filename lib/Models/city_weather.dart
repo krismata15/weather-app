@@ -12,14 +12,29 @@
 /// name : 'Caracas'
 /// cod : 200
 
+class CityWeatherList {
+  List<CityWeather> citiesWeather;
+
+  CityWeatherList({this.citiesWeather = const <CityWeather>[]});
+
+  CityWeatherList.fromJson(dynamic json) {
+    if (json['list'] != null) {
+      citiesWeather = [];
+      json['list'].forEach((v) {
+        citiesWeather.add(CityWeather.fromJson(v));
+      });
+    }
+  }
+}
+
 class CityWeather {
   Coord coord;
   List<Weather> weather;
   String base;
   Main main;
   int visibility;
-  Wind wind;
-  Clouds clouds;
+  //Wind wind;
+  //Clouds clouds;
   int dt;
   Sys sys;
   int timezone;
@@ -33,8 +48,6 @@ class CityWeather {
       this.base,
       this.main,
       this.visibility,
-      this.wind,
-      this.clouds,
       this.dt,
       this.sys,
       this.timezone,
@@ -53,8 +66,6 @@ class CityWeather {
     base = json['base'];
     main = json['main'] != null ? Main.fromJson(json['main']) : null;
     visibility = json['visibility'];
-    wind = json['wind'] != null ? Wind.fromJson(json['wind']) : null;
-    clouds = json['clouds'] != null ? Clouds.fromJson(json['clouds']) : null;
     dt = json['dt'];
     sys = json['sys'] != null ? Sys.fromJson(json['sys']) : null;
     timezone = json['timezone'];
@@ -76,12 +87,6 @@ class CityWeather {
       map['main'] = main.toJson();
     }
     map['visibility'] = visibility;
-    if (wind != null) {
-      map['wind'] = wind.toJson();
-    }
-    if (clouds != null) {
-      map['clouds'] = clouds.toJson();
-    }
     map['dt'] = dt;
     if (sys != null) {
       map['sys'] = sys.toJson();
@@ -158,9 +163,8 @@ class Wind {
   Wind({this.speed, this.deg, this.gust});
 
   Wind.fromJson(dynamic json) {
-    speed = json['speed'];
+    speed = (json['speed'] as num).toDouble();
     deg = json['deg'];
-    gust = json['gust'];
   }
 
   Map<String, dynamic> toJson() {
@@ -196,7 +200,7 @@ class Main {
       this.humidity});
 
   Main.fromJson(dynamic json) {
-    temp = json['temp'];
+    temp = (json['temp'] as num).toDouble();
     feelsLike = (json['feels_like'] as num).toDouble();
     tempMin = (json['temp_min'] as num).toDouble();
     tempMax = (json['temp_max'] as num).toDouble();
@@ -256,8 +260,8 @@ class Coord {
   Coord({this.lon, this.lat});
 
   Coord.fromJson(dynamic json) {
-    lon = json['lon'];
-    lat = json['lat'];
+    lon = (json['lon'] as num).toDouble();
+    lat = (json['lat'] as num).toDouble();
   }
 
   Map<String, dynamic> toJson() {

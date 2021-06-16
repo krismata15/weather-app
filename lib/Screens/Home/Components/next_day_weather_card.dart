@@ -1,9 +1,9 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:weatherAppMobile/Models/city_weather_details.dart';
-import 'package:weatherAppMobile/Models/forecast_weather.dart';
 import 'package:weatherAppMobile/Screens/Home/Components/min_max_tile.dart';
 
 class NextDayWeatherCard extends StatelessWidget {
@@ -45,32 +45,45 @@ class NextDayWeatherCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 2,
+                  height: 6,
                 ),
                 Text(
                   formatDateFromUnixTime(),
+                  style: TextStyle(
+                    fontSize: 14.0,
+                  ),
                 ),
                 SizedBox(
                   height: 14,
                 ),
-                Icon(
+                CircleAvatar(
+                  minRadius: 10,
+                  maxRadius: 30,
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        'http://openweathermap.org/img/wn/${forecastData.weather.first.icon}@2x.png',
+                    placeholder: (context, url) => CircleAvatar(),
+                    errorWidget: (context, url, error) => CircleAvatar(),
+                  ),
+                ),
+                /*Icon(
                   Icons.wb_sunny_outlined,
                   size: 60,
                   //color: Colors.amberAccent,
-                ),
+                ),*/
                 SizedBox(
-                  height: 10,
+                  height: 6,
                 ),
                 Text(
                   ' ${forecastData.feelsLike.day.ceil()}°',
                   style: TextStyle(
-                    fontSize: 30.0,
+                    fontSize: 26.0,
                   ),
                 ),
                 Text(
                   '${forecastData.weather.first.main}',
                   style: TextStyle(
-                    fontSize: 15.0,
+                    fontSize: 14.0,
                   ),
                 ),
                 Expanded(
