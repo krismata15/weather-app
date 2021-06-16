@@ -1,15 +1,20 @@
-# weatherAppMobile
+# Weather App
 
-A new Flutter project.
+Aplicación de Clima hecha en Flutter, que permite buscar el clima en cualquier ciudad del mundo.
 
-## Getting Started
+## Requisitos
 
-This project is a starting point for a Flutter application.
+- Flutter version 1.22.6
 
-A few resources to get you started if this is your first Flutter project:
+## Configuración
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- Para cambiar la dirección de conexión de la API en la carpeta **./Uitls/constansts** se configura el string de conexión.
+
+## Para ejecutar
+
+```sh
+flutter run
+```
 
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
