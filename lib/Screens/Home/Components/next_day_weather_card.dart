@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:weatherAppMobile/Models/city_weather_details.dart';
 import 'package:weatherAppMobile/Screens/Home/Components/min_max_tile.dart';
+import 'package:weatherAppMobile/Utils/util_functions.dart';
 
 class NextDayWeatherCard extends StatelessWidget {
   final Daily forecastData;
@@ -81,7 +82,7 @@ class NextDayWeatherCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${forecastData.weather.first.main}',
+                  '${parseWeatherDescriptionToEs(forecastData.weather.first.main)}',
                   style: TextStyle(
                     fontSize: 14.0,
                   ),

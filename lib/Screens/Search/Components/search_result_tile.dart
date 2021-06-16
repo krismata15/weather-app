@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:weatherAppMobile/Models/city_weather.dart';
 import 'package:weatherAppMobile/Screens/Home/home_screen.dart';
+import 'package:weatherAppMobile/Utils/util_functions.dart';
 
 class WeatherResultTile extends StatelessWidget {
   final CityWeather cityWeather;
@@ -12,15 +13,17 @@ class WeatherResultTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       key: Key(cityWeather.id.toString()),
-      leading: CachedNetworkImage(
-        imageUrl:
-            'http://openweathermap.org/img/wn/${cityWeather.weather.first.icon}@2x.png',
-        placeholder: (context, url) => CircleAvatar(),
-        errorWidget: (context, url, error) => CircleAvatar(),
+      leading: CircleAvatar(
+        child: CachedNetworkImage(
+          imageUrl:
+              'http://openweathermap.org/img/wn/${cityWeather.weather.first.icon}@2x.png',
+          placeholder: (context, url) => CircleAvatar(),
+          errorWidget: (context, url, error) => CircleAvatar(),
+        ),
       ),
       title: Text('${cityWeather.name}, ${cityWeather.sys.country}'),
-      subtitle:
-          Text('${cityWeather.main.temp}° - ${cityWeather.weather.first.main}'),
+      subtitle: Text(
+          '${cityWeather.main.temp}° - ${parseWeatherDescriptionToEs(cityWeather.weather.first.main)}'),
       trailing: Text(
         '${cityWeather.main.tempMax}° / ${cityWeather.main.tempMin}°',
         style: TextStyle(

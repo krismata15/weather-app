@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weatherAppMobile/Components/loading_data_component.dart';
 import 'package:weatherAppMobile/Logic/WeatherSearch/weather_search_logic.dart';
 import 'package:weatherAppMobile/Logic/WeatherSearch/weather_search_state.dart';
 import 'package:weatherAppMobile/Screens/Search/Components/search_results_list.dart';
@@ -67,8 +68,8 @@ class StreamBuilderDelegate extends StatelessWidget {
             }
 
             if (state is SearchLoading) {
-              return Center(
-                child: CircularProgressIndicator(),
+              return LoadingDataComponent(
+                title: 'Buscando',
               );
             }
 

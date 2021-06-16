@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:weatherAppMobile/Models/city_weather.dart';
 import 'package:weatherAppMobile/Models/city_weather_details.dart';
-import 'package:weatherAppMobile/utils/utils_error_handler.dart';
+import 'package:weatherAppMobile/Utils/constants.dart';
+import 'package:weatherAppMobile/Utils/utils_error_handler.dart';
 import 'package:weatherAppMobile/Models/weather_data.dart';
 
 class WeatherService {
   static BaseOptions options = BaseOptions(
-    baseUrl: 'http://10.0.2.2:8000/api',
+    baseUrl: SERVER_URL,
     connectTimeout: 10000,
     receiveTimeout: 10000,
   );

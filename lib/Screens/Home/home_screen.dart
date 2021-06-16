@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weatherAppMobile/Components/loading_data_component.dart';
 import 'package:weatherAppMobile/Logic/WeatherData/weather_data_logic.dart';
 import 'package:weatherAppMobile/Logic/WeatherData/weather_state.dart';
 import 'package:weatherAppMobile/Logic/WeatherSearch/weather_search_logic.dart';
@@ -74,9 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (snapshot.hasData) {
                     final state = snapshot.data;
                     if (state is WeatherLoadInProgress) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
+                      return LoadingDataComponent();
                     }
 
                     if (state is WeatherLoadSuccessful) {

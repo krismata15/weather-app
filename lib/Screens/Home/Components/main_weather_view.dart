@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weatherAppMobile/Screens/Home/Components/min_max_tile.dart';
+import 'package:weatherAppMobile/Utils/util_functions.dart';
 
 class MainWeatherView extends StatelessWidget {
   final double temp;
@@ -23,7 +24,7 @@ class MainWeatherView extends StatelessWidget {
         ),
         Center(
           child: Text(
-            weather,
+            parseWeatherDescriptionToEs(weather),
             style: TextStyle(
               fontSize: 32.0,
               //color: Colors.white.withOpacity(0.7),
