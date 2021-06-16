@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weatherAppMobile/Components/error_handler_component.dart';
 import 'package:weatherAppMobile/Components/loading_data_component.dart';
 import 'package:weatherAppMobile/Logic/WeatherSearch/weather_search_logic.dart';
 import 'package:weatherAppMobile/Logic/WeatherSearch/weather_search_state.dart';
@@ -93,6 +94,12 @@ class StreamBuilderDelegate extends StatelessWidget {
               }
               return SearchResults(
                 cities: state.cities,
+              );
+            }
+
+            if (state is SearchError) {
+              return ErrorHandlerComponent(
+                description: state.error,
               );
             }
           }

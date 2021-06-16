@@ -2,33 +2,33 @@ import 'package:dio/dio.dart';
 
 void handleDioErrors(DioError e) {
   if (e.type == DioErrorType.CONNECT_TIMEOUT) {
-    throw ('Connection Error - Make sure you\'re connected before continue');
+    throw ('Error de conexión - Asegurese estar conectado a internet antes de continuar');
     //return;
   }
 
   if (e.type == DioErrorType.RECEIVE_TIMEOUT) {
 // ...
-    throw ('Connection Error - Make sure you\'re connected before continue');
+    throw ('Error de conexión - Asegurese estar conectado a internet antes de continuar');
   }
 
   if (e.type == DioErrorType.RESPONSE) {
     print('DioErrorType.RESPONSE');
     print(e.response.data);
 
-    throw e.response;
+    throw ('Error obteniendo datos - Intente de nuevo');
   }
 
   if (e.type == DioErrorType.CANCEL) {
-    throw ('Canceled by user');
+    throw ('Solicitud cancelada por el usuario');
   }
 
   if (e.type == DioErrorType.DEFAULT) {
     if (e.error != null) {
       if (e.toString().contains('SocketException')) {
-        throw ('Connection Error - Make sure you\'re connected before continue');
+        throw ('Error de conexión - Asegurese estar conectado a internet antes de continuar');
       } else {
         print(e);
-        throw ('Error getting data, please try again');
+        throw ('Error obteniendo datos - Intente de nuevo');
       }
     }
     // ...

@@ -28,7 +28,6 @@ class WeatherDataLogicView {
           await WeatherService.getCityWeatherWithForecast(searchParameter);
       _weatherStream.add(WeatherLoadSuccessful(weatherData: weatherData));
     } catch (e) {
-      rethrow;
       _weatherStream.add(WeatherLoadError(error: e));
     }
   }

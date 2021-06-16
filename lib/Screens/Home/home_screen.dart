@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weatherAppMobile/Components/error_handler_component.dart';
 import 'package:weatherAppMobile/Components/loading_data_component.dart';
 import 'package:weatherAppMobile/Logic/WeatherData/weather_data_logic.dart';
 import 'package:weatherAppMobile/Logic/WeatherData/weather_state.dart';
@@ -86,7 +87,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     }
 
                     if (state is WeatherLoadError) {
-                      return Text('Error loading ${state.error.toString()}');
+                      return ErrorHandlerComponent(
+                        description: state.error,
+                        retryHandler: () => logicViewWeather
+                            .getSelectedOption(widget.cityWeather),
+                      );
                     }
                   }
 

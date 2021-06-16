@@ -12,7 +12,7 @@ class WeatherLoadSuccessful extends WeatherState {
 }
 
 class WeatherLoadError extends WeatherState {
-  final Error error;
+  final String error;
 
   WeatherLoadError({@required this.error});
 }

@@ -14,7 +14,7 @@ class SearchLoaded extends WeatherSearchState {
 }
 
 class SearchError extends WeatherSearchState {
-  final Error error;
+  final String error;
 
   SearchError({@required this.error});
 }
