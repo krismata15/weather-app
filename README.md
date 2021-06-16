@@ -8,7 +8,7 @@ Aplicación de Clima hecha en Flutter, que permite buscar el clima en cualquier 
 
 ## Configuración
 
-- Para cambiar la dirección de conexión de la API en la carpeta **./Uitls/constansts** se configura el string de conexión.
+- Para cambiar la dirección de conexión de la API, en la carpeta **./Utils/constants** se configura el string de conexión.
 
 ## Para ejecutar
 
