@@ -1,9 +1,9 @@
-import 'package:weatherAppMobile/Models/city_weather.dart';
-import 'package:weatherAppMobile/Models/city_weather_details.dart';
+import 'package:weather_app/Models/city_weather.dart';
+import 'package:weather_app/Models/city_weather_details.dart';
 
 class WeatherData {
-  CityWeather cityWeather;
-  CityWeatherDetails cityWeatherDetails;
+  CityWeather? cityWeather;
+  CityWeatherDetails? cityWeatherDetails;
 
   WeatherData({this.cityWeatherDetails, this.cityWeather});
 

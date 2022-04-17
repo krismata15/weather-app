@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LoadingDataComponent extends StatelessWidget {
-  final String title;
+  final String? title;
 
   LoadingDataComponent({this.title});
 

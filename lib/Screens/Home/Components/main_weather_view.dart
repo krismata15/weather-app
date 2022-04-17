@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:weatherAppMobile/Screens/Home/Components/min_max_tile.dart';
-import 'package:weatherAppMobile/Utils/util_functions.dart';
+import 'package:weather_app/Screens/Home/Components/min_max_tile.dart';
+import 'package:weather_app/utils/util_functions.dart';
 
 class MainWeatherView extends StatelessWidget {
-  final double temp;
-  final double min, max;
-  final String weather;
+  final double? temp;
+  final double? min, max;
+  final String? weather;
 
   MainWeatherView({this.temp, this.min, this.max, this.weather});
 
@@ -15,7 +15,7 @@ class MainWeatherView extends StatelessWidget {
       children: [
         Center(
           child: Text(
-            ' ${temp.ceil()}°',
+            ' ${temp!.ceil()}°',
             style: TextStyle(
               fontSize: 150.0,
               fontWeight: FontWeight.w500,

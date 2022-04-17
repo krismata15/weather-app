@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:weatherAppMobile/Components/error_handler_component.dart';
-import 'package:weatherAppMobile/Components/loading_data_component.dart';
-import 'package:weatherAppMobile/Logic/WeatherSearch/weather_search_logic.dart';
-import 'package:weatherAppMobile/Logic/WeatherSearch/weather_search_state.dart';
-import 'package:weatherAppMobile/Screens/Search/Components/search_results_list.dart';
+import 'package:weather_app/Components/error_handler_component.dart';
+import 'package:weather_app/Components/loading_data_component.dart';
+import 'package:weather_app/Logic/WeatherSearch/weather_search_logic.dart';
+import 'package:weather_app/Logic/WeatherSearch/weather_search_state.dart';
+import 'package:weather_app/Screens/Search/Components/search_results_list.dart';
 
 class WeatherSearch extends SearchDelegate {
-  WeatherSearch({@required this.logic}) : assert(logic != null);
+  WeatherSearch({required this.logic}) : assert(logic != null);
 
   final WeatherSearchLogicView logic;
 
@@ -54,7 +54,7 @@ class WeatherSearch extends SearchDelegate {
 class StreamBuilderDelegate extends StatelessWidget {
   final Stream<WeatherSearchState> stream;
 
-  StreamBuilderDelegate({@required this.stream}) : assert(stream != null);
+  StreamBuilderDelegate({required this.stream}) : assert(stream != null);
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,7 @@ class StreamBuilderDelegate extends StatelessWidget {
             }
 
             if (state is SearchLoaded) {
-              if (state.cities.isEmpty) {
+              if (state.cities!.isEmpty) {
                 return Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,

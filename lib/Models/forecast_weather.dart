@@ -5,11 +5,11 @@
 /// city : {'id':3646738,'name':'Caracas','coord':{'lat':10.488,'lon':-66.8792},'country':'VE','population':0,'timezone':-14400,'sunrise':1623751566,'sunset':1623797407}
 
 class ForecastWeather {
-  String cod;
-  int message;
-  int cnt;
-  List<ForecastData> forecastList;
-  City city;
+  String? cod;
+  int? message;
+  int? cnt;
+  List<ForecastData>? forecastList;
+  City? city;
 
   ForecastWeather(
       {this.cod, this.message, this.cnt, this.forecastList, this.city});
@@ -21,7 +21,7 @@ class ForecastWeather {
     if (json['list'] != null) {
       forecastList = [];
       json['list'].forEach((v) {
-        forecastList.add(ForecastData.fromJson(v));
+        forecastList!.add(ForecastData.fromJson(v));
       });
     }
     city = json['city'] != null ? City.fromJson(json['city']) : null;
@@ -33,10 +33,10 @@ class ForecastWeather {
     map['message'] = message;
     map['cnt'] = cnt;
     if (forecastList != null) {
-      map['list'] = forecastList.map((v) => v.toJson()).toList();
+      map['list'] = forecastList!.map((v) => v.toJson()).toList();
     }
     if (city != null) {
-      map['city'] = city.toJson();
+      map['city'] = city!.toJson();
     }
     return map;
   }
@@ -52,14 +52,14 @@ class ForecastWeather {
 /// sunset : 1623797407
 
 class City {
-  int id;
-  String name;
-  Coord coord;
-  String country;
-  int population;
-  int timezone;
-  int sunrise;
-  int sunset;
+  int? id;
+  String? name;
+  Coord? coord;
+  String? country;
+  int? population;
+  int? timezone;
+  int? sunrise;
+  int? sunset;
 
   City(
       {this.id,
@@ -87,7 +87,7 @@ class City {
     map['id'] = id;
     map['name'] = name;
     if (coord != null) {
-      map['coord'] = coord.toJson();
+      map['coord'] = coord!.toJson();
     }
     map['country'] = country;
     map['population'] = population;
@@ -102,8 +102,8 @@ class City {
 /// lon : -66.8792
 
 class Coord {
-  double lat;
-  double lon;
+  double? lat;
+  double? lon;
 
   Coord({this.lat, this.lon});
 
@@ -132,15 +132,15 @@ class Coord {
 /// dt_txt : '2021-06-15 21:00:00'
 
 class ForecastData {
-  int dt;
-  Main main;
-  List<Weather> weather;
-  Clouds clouds;
-  Wind wind;
-  int visibility;
-  double pop;
-  Sys sys;
-  String dtTxt;
+  int? dt;
+  Main? main;
+  List<Weather>? weather;
+  Clouds? clouds;
+  Wind? wind;
+  int? visibility;
+  double? pop;
+  Sys? sys;
+  String? dtTxt;
 
   ForecastData(
       {this.dt,
@@ -159,7 +159,7 @@ class ForecastData {
     if (json['weather'] != null) {
       weather = [];
       json['weather'].forEach((v) {
-        weather.add(Weather.fromJson(v));
+        weather!.add(Weather.fromJson(v));
       });
     }
     clouds = json['clouds'] != null ? Clouds.fromJson(json['clouds']) : null;
@@ -174,21 +174,21 @@ class ForecastData {
     var map = <String, dynamic>{};
     map['dt'] = dt;
     if (main != null) {
-      map['main'] = main.toJson();
+      map['main'] = main!.toJson();
     }
     if (weather != null) {
-      map['weather'] = weather.map((v) => v.toJson()).toList();
+      map['weather'] = weather!.map((v) => v.toJson()).toList();
     }
     if (clouds != null) {
-      map['clouds'] = clouds.toJson();
+      map['clouds'] = clouds!.toJson();
     }
     if (wind != null) {
-      map['wind'] = wind.toJson();
+      map['wind'] = wind!.toJson();
     }
     map['visibility'] = visibility;
     map['pop'] = pop;
     if (sys != null) {
-      map['sys'] = sys.toJson();
+      map['sys'] = sys!.toJson();
     }
     map['dt_txt'] = dtTxt;
     return map;
@@ -198,7 +198,7 @@ class ForecastData {
 /// pod : 'd'
 
 class Sys {
-  String pod;
+  String? pod;
 
   Sys({this.pod});
 
@@ -218,9 +218,9 @@ class Sys {
 /// gust : 3.81
 
 class Wind {
-  double speed;
-  int deg;
-  double gust;
+  double? speed;
+  int? deg;
+  double? gust;
 
   Wind({this.speed, this.deg, this.gust});
 
@@ -242,7 +242,7 @@ class Wind {
 /// all : 92
 
 class Clouds {
-  int all;
+  int? all;
 
   Clouds({this.all});
 
@@ -263,10 +263,10 @@ class Clouds {
 /// icon : '10d'
 
 class Weather {
-  int id;
-  String main;
-  String description;
-  String icon;
+  int? id;
+  String? main;
+  String? description;
+  String? icon;
 
   Weather({this.id, this.main, this.description, this.icon});
 
@@ -298,15 +298,15 @@ class Weather {
 /// temp_kf : 2.45
 
 class Main {
-  double temp;
-  double feelsLike;
-  double tempMin;
-  double tempMax;
-  int pressure;
-  int seaLevel;
-  int grndLevel;
-  int humidity;
-  double tempKf;
+  double? temp;
+  double? feelsLike;
+  double? tempMin;
+  double? tempMax;
+  int? pressure;
+  int? seaLevel;
+  int? grndLevel;
+  int? humidity;
+  double? tempKf;
 
   Main(
       {this.temp,

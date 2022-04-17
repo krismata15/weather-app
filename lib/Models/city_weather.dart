@@ -13,7 +13,7 @@
 /// cod : 200
 
 class CityWeatherList {
-  List<CityWeather> citiesWeather;
+  List<CityWeather>? citiesWeather;
 
   CityWeatherList({this.citiesWeather = const <CityWeather>[]});
 
@@ -21,26 +21,26 @@ class CityWeatherList {
     if (json['list'] != null) {
       citiesWeather = [];
       json['list'].forEach((v) {
-        citiesWeather.add(CityWeather.fromJson(v));
+        citiesWeather!.add(CityWeather.fromJson(v));
       });
     }
   }
 }
 
 class CityWeather {
-  Coord coord;
-  List<Weather> weather;
-  String base;
-  Main main;
-  int visibility;
+  Coord? coord;
+  List<Weather>? weather;
+  String? base;
+  Main? main;
+  int? visibility;
   //Wind wind;
   //Clouds clouds;
-  int dt;
-  Sys sys;
-  int timezone;
-  int id;
-  String name;
-  int cod;
+  int? dt;
+  Sys? sys;
+  int? timezone;
+  int? id;
+  String? name;
+  int? cod;
 
   CityWeather(
       {this.coord,
@@ -60,7 +60,7 @@ class CityWeather {
     if (json['weather'] != null) {
       weather = [];
       json['weather'].forEach((v) {
-        weather.add(Weather.fromJson(v));
+        weather!.add(Weather.fromJson(v));
       });
     }
     base = json['base'];
@@ -77,19 +77,19 @@ class CityWeather {
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
     if (coord != null) {
-      map['coord'] = coord.toJson();
+      map['coord'] = coord!.toJson();
     }
     if (weather != null) {
-      map['weather'] = weather.map((v) => v.toJson()).toList();
+      map['weather'] = weather!.map((v) => v.toJson()).toList();
     }
     map['base'] = base;
     if (main != null) {
-      map['main'] = main.toJson();
+      map['main'] = main!.toJson();
     }
     map['visibility'] = visibility;
     map['dt'] = dt;
     if (sys != null) {
-      map['sys'] = sys.toJson();
+      map['sys'] = sys!.toJson();
     }
     map['timezone'] = timezone;
     map['id'] = id;
@@ -106,11 +106,11 @@ class CityWeather {
 /// sunset : 1623797407
 
 class Sys {
-  int type;
-  int id;
-  String country;
-  int sunrise;
-  int sunset;
+  int? type;
+  int? id;
+  String? country;
+  int? sunrise;
+  int? sunset;
 
   Sys({this.type, this.id, this.country, this.sunrise, this.sunset});
 
@@ -136,7 +136,7 @@ class Sys {
 /// all : 40
 
 class Clouds {
-  int all;
+  int? all;
 
   Clouds({this.all});
 
@@ -156,9 +156,9 @@ class Clouds {
 /// gust : 4.02
 
 class Wind {
-  double speed;
-  int deg;
-  double gust;
+  double? speed;
+  int? deg;
+  double? gust;
 
   Wind({this.speed, this.deg, this.gust});
 
@@ -184,12 +184,12 @@ class Wind {
 /// humidity : 58
 
 class Main {
-  double temp;
-  double feelsLike;
-  double tempMin;
-  double tempMax;
-  int pressure;
-  int humidity;
+  double? temp;
+  double? feelsLike;
+  double? tempMin;
+  double? tempMax;
+  int? pressure;
+  int? humidity;
 
   Main(
       {this.temp,
@@ -226,10 +226,10 @@ class Main {
 /// icon : '03d'
 
 class Weather {
-  int id;
-  String main;
-  String description;
-  String icon;
+  int? id;
+  String? main;
+  String? description;
+  String? icon;
 
   Weather({this.id, this.main, this.description, this.icon});
 
@@ -254,8 +254,8 @@ class Weather {
 /// lat : 10.488
 
 class Coord {
-  double lon;
-  double lat;
+  double? lon;
+  double? lat;
 
   Coord({this.lon, this.lat});
 

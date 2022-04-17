@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:weatherAppMobile/Components/error_handler_component.dart';
-import 'package:weatherAppMobile/Components/loading_data_component.dart';
-import 'package:weatherAppMobile/Logic/WeatherData/weather_data_logic.dart';
-import 'package:weatherAppMobile/Logic/WeatherData/weather_state.dart';
-import 'package:weatherAppMobile/Logic/WeatherSearch/weather_search_logic.dart';
-import 'package:weatherAppMobile/Models/city_weather.dart';
-import 'package:weatherAppMobile/Models/weather_data.dart';
-import 'package:weatherAppMobile/Screens/Search/search_screen.dart';
-import './Components/export_components.dart';
+import 'package:weather_app/Components/error_handler_component.dart';
+import 'package:weather_app/Components/loading_data_component.dart';
+import 'package:weather_app/Logic/WeatherData/weather_data_logic.dart';
+import 'package:weather_app/Logic/WeatherData/weather_state.dart';
+import 'package:weather_app/Logic/WeatherSearch/weather_search_logic.dart';
+import 'package:weather_app/Models/city_weather.dart';
+import 'package:weather_app/Models/weather_data.dart';
+import 'package:weather_app/Screens/Home/Components/animated_background.dart';
+import 'package:weather_app/Screens/Home/Components/date_text_formatted.dart';
+import 'package:weather_app/Screens/Home/Components/location_text.dart';
+import 'package:weather_app/Screens/Home/Components/main_weather_view.dart';
+import 'package:weather_app/Screens/Home/Components/next_day_weather_card.dart';
+import 'package:weather_app/Screens/Search/search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  final CityWeather cityWeather;
+  final CityWeather? cityWeather;
 
   HomeScreen({this.cityWeather});
 
@@ -19,7 +23,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  WeatherDataLogicView logicViewWeather;
+  late WeatherDataLogicView logicViewWeather;
   WeatherSearchLogicView weatherSearchLogic =
       WeatherSearchLogicView.initialSearchState();
 
@@ -80,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     }
 
                     if (state is WeatherLoadSuccessful) {
-                      WeatherData weatherData = state.weatherData;
+                      WeatherData weatherData = state.weatherData!;
                       return HomeBodyWeather(
                         weatherData: weatherData,
                       );
@@ -107,10 +111,10 @@ class _HomeScreenState extends State<HomeScreen> {
 class HomeBodyWeather extends StatelessWidget {
   final WeatherData weatherData;
 
-  HomeBodyWeather({@required this.weatherData}) : assert(weatherData != null);
+  HomeBodyWeather({required this.weatherData}) : assert(weatherData != null);
 
   List<Widget> forecastView(WeatherData weatherData) {
-    return weatherData.cityWeatherDetails.daily
+    return weatherData.cityWeatherDetails!.daily!
         .map((e) => NextDayWeatherCard(
               forecastData: e,
             ))
@@ -128,8 +132,8 @@ class HomeBodyWeather extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               LocationText(
-                city: weatherData.cityWeather.name,
-                countryCode: weatherData.cityWeather.sys.country,
+                city: weatherData.cityWeather!.name,
+                countryCode: weatherData.cityWeather!.sys!.country,
               ),
               DateTextFormatted(),
             ],
@@ -139,10 +143,10 @@ class HomeBodyWeather extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.05,
         ),
         MainWeatherView(
-          temp: weatherData.cityWeather.main.temp,
-          weather: weatherData.cityWeather.weather.first.main,
-          max: weatherData.cityWeather.main.tempMax,
-          min: weatherData.cityWeather.main.tempMin,
+          temp: weatherData.cityWeather!.main!.temp,
+          weather: weatherData.cityWeather!.weather!.first.main,
+          max: weatherData.cityWeather!.main!.tempMax,
+          min: weatherData.cityWeather!.main!.tempMin,
         ),
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.10,

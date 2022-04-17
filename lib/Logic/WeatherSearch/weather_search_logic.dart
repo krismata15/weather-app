@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:weatherAppMobile/Logic/WeatherSearch/weather_search_state.dart';
-import 'package:weatherAppMobile/Models/city_weather.dart';
-import 'package:weatherAppMobile/Services/weather_service.dart';
+import 'package:weather_app/Logic/WeatherSearch/weather_search_state.dart';
+import 'package:weather_app/Models/city_weather.dart';
+import 'package:weather_app/Services/weather_service.dart';
 
 class WeatherSearchLogicView {
   WeatherSearchLogicView.initialSearchState() {
@@ -18,7 +18,7 @@ class WeatherSearchLogicView {
     _searchStream.add(SearchWaiting());
   }
 
-  Timer _debounce;
+  Timer? _debounce;
 
   void initSearch(String query) {
     if (query.isEmpty) {
@@ -26,7 +26,7 @@ class WeatherSearchLogicView {
     } else {
       _searchStream.add(SearchLoading());
       if (_debounce?.isActive ?? false) {
-        _debounce.cancel();
+        _debounce!.cancel();
       }
       _debounce = Timer(const Duration(milliseconds: 600), () {
         searchWeatherOptions(query);
@@ -36,11 +36,11 @@ class WeatherSearchLogicView {
 
   void searchWeatherOptions(String query) async {
     try {
-      List<CityWeather> cities =
+      List<CityWeather>? cities =
           await WeatherService.getCityRecommendations(query);
       _searchStream.add(SearchLoaded(cities: cities));
     } catch (e) {
-      _searchStream.add(SearchError(error: e));
+      _searchStream.add(SearchError(error: e.toString()));
     }
   }
 }

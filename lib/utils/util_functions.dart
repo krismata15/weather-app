@@ -1,6 +1,6 @@
 library functions;
 
-String parseWeatherDescriptionToEs(String weatherDescription) {
+String parseWeatherDescriptionToEs(String? weatherDescription) {
   String state = '';
   switch (weatherDescription) {
     case 'Thunderstorm':

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MinMaxTile extends StatelessWidget {
-  final double min, max;
+  final double? min, max;
   final bool center;
   MinMaxTile({this.min, this.max, this.center = true});
 
@@ -21,7 +21,7 @@ class MinMaxTile extends StatelessWidget {
               //color: Colors.white,
             ),
             Text(
-              '${min.ceil()}°',
+              '${min!.ceil()}°',
               style: TextStyle(
                 fontSize: 18.0,
               ),
@@ -39,7 +39,7 @@ class MinMaxTile extends StatelessWidget {
               //color: Colors.white,
             ),
             Text(
-              '${max.ceil()}°',
+              '${max!.ceil()}°',
               style: TextStyle(
                 //color: Colors.white,
                 fontSize: 18.0,

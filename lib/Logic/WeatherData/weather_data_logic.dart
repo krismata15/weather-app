@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:weatherAppMobile/Logic/WeatherData/weather_state.dart';
-import 'package:weatherAppMobile/Models/city_weather.dart';
-import 'package:weatherAppMobile/Models/weather_data.dart';
-import 'package:weatherAppMobile/Services/weather_service.dart';
+import 'package:weather_app/Logic/WeatherData/weather_state.dart';
+import 'package:weather_app/Models/city_weather.dart';
+import 'package:weather_app/Models/weather_data.dart';
+import 'package:weather_app/Services/weather_service.dart';
 
 class WeatherDataLogicView {
-  WeatherDataLogicView.initialLocalData(CityWeather cityWeather) {
+  WeatherDataLogicView.initialLocalData(CityWeather? cityWeather) {
     getSelectedOption(cityWeather);
   }
 
@@ -16,19 +16,19 @@ class WeatherDataLogicView {
   Stream<WeatherState> get weatherStream => _weatherStream.stream;
 
   //Methods are like event for change state
-  void getSelectedOption(CityWeather cityWeather) async {
+  void getSelectedOption(CityWeather? cityWeather) async {
     try {
       _weatherStream.add(WeatherLoadInProgress());
 
-      Map<String, double> searchParameter = {
+      Map<String, double?> searchParameter = {
         'latitude': cityWeather?.coord?.lat,
         'longitude': cityWeather?.coord?.lon,
       };
-      WeatherData weatherData =
+      WeatherData? weatherData =
           await WeatherService.getCityWeatherWithForecast(searchParameter);
       _weatherStream.add(WeatherLoadSuccessful(weatherData: weatherData));
     } catch (e) {
-      _weatherStream.add(WeatherLoadError(error: e));
+      _weatherStream.add(WeatherLoadError(error: e.toString()));
     }
   }
 }

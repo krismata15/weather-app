@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:weatherAppMobile/Models/city_weather.dart';
-import 'package:weatherAppMobile/Models/city_weather_details.dart';
-import 'package:weatherAppMobile/Utils/constants.dart';
-import 'package:weatherAppMobile/Utils/utils_error_handler.dart';
-import 'package:weatherAppMobile/Models/weather_data.dart';
+import 'package:weather_app/Models/city_weather.dart';
+import 'package:weather_app/Models/city_weather_details.dart';
+import 'package:weather_app/Models/weather_data.dart';
+import 'package:weather_app/utils/constants.dart';
+import 'package:weather_app/utils/utils_error_handler.dart';
 
 class WeatherService {
   static BaseOptions options = BaseOptions(
@@ -14,9 +14,9 @@ class WeatherService {
 
   static Dio dio = Dio(options);
 
-  static Future<CityWeather> getCityWeather() async {
+  static Future<CityWeather?> getCityWeather() async {
     String url = '/city-weather';
-    CityWeather cityWeather;
+    CityWeather? cityWeather;
     try {
       Response response = await dio.get(
         url,
@@ -35,10 +35,10 @@ class WeatherService {
     }
   }
 
-  static Future<WeatherData> getCityWeatherWithForecast(
-      Map<String, double> searchParameter) async {
+  static Future<WeatherData?> getCityWeatherWithForecast(
+      Map<String, double?> searchParameter) async {
     String url = '/city-weather-forecast';
-    WeatherData weather;
+    WeatherData? weather;
     try {
       Response response = await dio.get(
         url,
@@ -58,7 +58,7 @@ class WeatherService {
     }
   }
 
-  static Future<List<CityWeather>> getCityRecommendations(String query) async {
+  static Future<List<CityWeather>?> getCityRecommendations(String query) async {
     String url = '/city-weather-list';
     CityWeatherList cities = CityWeatherList();
     try {
@@ -80,9 +80,9 @@ class WeatherService {
     }
   }
 
-  static Future<CityWeatherDetails> getCityWeatherDetailed() async {
+  static Future<CityWeatherDetails?> getCityWeatherDetailed() async {
     String url = '/city-weather-detailed';
-    CityWeatherDetails cityWeatherDetails;
+    CityWeatherDetails? cityWeatherDetails;
     try {
       Response response = await dio.get(
         url,

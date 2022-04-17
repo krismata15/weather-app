@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ErrorHandlerComponent extends StatelessWidget {
-  final String title, description;
-  final Function retryHandler;
+  final String? title, description;
+  final Function? retryHandler;
 
   ErrorHandlerComponent({this.title, this.description, this.retryHandler});
 
@@ -39,7 +39,7 @@ class ErrorHandlerComponent extends StatelessWidget {
                 elevation: 0,
                 primary: Colors.white,
               ),
-              onPressed: retryHandler,
+              onPressed: retryHandler as void Function()?,
               child: Text(
                 'Reintentar',
                 style: TextStyle(

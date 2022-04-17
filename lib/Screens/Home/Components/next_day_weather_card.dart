@@ -3,19 +3,19 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:weatherAppMobile/Models/city_weather_details.dart';
-import 'package:weatherAppMobile/Screens/Home/Components/min_max_tile.dart';
-import 'package:weatherAppMobile/Utils/util_functions.dart';
+import 'package:weather_app/Models/city_weather_details.dart';
+import 'package:weather_app/Screens/Home/Components/min_max_tile.dart';
+import 'package:weather_app/utils/util_functions.dart';
 
 class NextDayWeatherCard extends StatelessWidget {
   final Daily forecastData;
   final DateFormat dateFormat = DateFormat('E dd MMMM', 'es');
 
-  NextDayWeatherCard({@required this.forecastData});
+  NextDayWeatherCard({required this.forecastData});
 
   String formatDateFromUnixTime() {
     DateTime dateTime =
-        DateTime.fromMillisecondsSinceEpoch(forecastData.dt * 1000);
+        DateTime.fromMillisecondsSinceEpoch(forecastData.dt! * 1000);
     return dateFormat.format(dateTime.toUtc());
   }
 
@@ -62,7 +62,7 @@ class NextDayWeatherCard extends StatelessWidget {
                   maxRadius: 30,
                   child: CachedNetworkImage(
                     imageUrl:
-                        'http://openweathermap.org/img/wn/${forecastData.weather.first.icon}@2x.png',
+                        'http://openweathermap.org/img/wn/${forecastData.weather!.first.icon}@2x.png',
                     placeholder: (context, url) => CircleAvatar(),
                     errorWidget: (context, url, error) => CircleAvatar(),
                   ),
@@ -76,13 +76,13 @@ class NextDayWeatherCard extends StatelessWidget {
                   height: 6,
                 ),
                 Text(
-                  ' ${forecastData.feelsLike.day.ceil()}°',
+                  ' ${forecastData.feelsLike!.day!.ceil()}°',
                   style: TextStyle(
                     fontSize: 26.0,
                   ),
                 ),
                 Text(
-                  '${parseWeatherDescriptionToEs(forecastData.weather.first.main)}',
+                  '${parseWeatherDescriptionToEs(forecastData.weather!.first.main)}',
                   style: TextStyle(
                     fontSize: 14.0,
                   ),
@@ -91,8 +91,8 @@ class NextDayWeatherCard extends StatelessWidget {
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: MinMaxTile(
-                      max: forecastData.temp.max,
-                      min: forecastData.temp.min,
+                      max: forecastData.temp!.max,
+                      min: forecastData.temp!.min,
                       center: false,
                     ),
                   ),
