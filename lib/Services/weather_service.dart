@@ -1,13 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:weather_app/Models/city_weather.dart';
 import 'package:weather_app/Models/city_weather_details.dart';
+import 'package:weather_app/Models/lat_lon_data.dart';
 import 'package:weather_app/Models/weather_data.dart';
 import 'package:weather_app/utils/constants.dart';
 import 'package:weather_app/utils/utils_error_handler.dart';
 
 class WeatherService {
   static BaseOptions options = BaseOptions(
-    baseUrl: SERVER_URL,
+    baseUrl: serverUrl,
     connectTimeout: 10000,
     receiveTimeout: 10000,
   );
@@ -35,21 +36,20 @@ class WeatherService {
     }
   }
 
-  static Future<WeatherData?> getCityWeatherWithForecast(
-      Map<String, double?> searchParameter) async {
+  static Future<WeatherData> getCityWeatherWithForecast(
+      LatLonData searchParameter) async {
     String url = '/city-weather-forecast';
-    WeatherData? weather;
     try {
       Response response = await dio.get(
         url,
-        queryParameters: searchParameter,
+        queryParameters: searchParameter.toJson(),
       );
 
       if (response.statusCode == 200) {
-        weather = WeatherData.fromJson(response.data);
+        return WeatherData.fromJson(response.data);
+      } else {
+        throw 'Error obteniendo la información del clima para esa búsqueda';
       }
-
-      return weather;
     } catch (e) {
       if (e is DioError) {
         handleDioErrors(e);

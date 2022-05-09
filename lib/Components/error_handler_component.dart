@@ -4,7 +4,9 @@ class ErrorHandlerComponent extends StatelessWidget {
   final String? title, description;
   final Function? retryHandler;
 
-  ErrorHandlerComponent({this.title, this.description, this.retryHandler});
+  const ErrorHandlerComponent(
+      {Key? key, this.title, this.description, this.retryHandler})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class ErrorHandlerComponent extends StatelessWidget {
             title ?? 'Ha ocurrido un error inesperado',
             textAlign: TextAlign.center,
           ),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
           Padding(
@@ -30,7 +32,7 @@ class ErrorHandlerComponent extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           if (retryHandler != null)
@@ -40,7 +42,7 @@ class ErrorHandlerComponent extends StatelessWidget {
                 primary: Colors.white,
               ),
               onPressed: retryHandler as void Function()?,
-              child: Text(
+              child: const Text(
                 'Reintentar',
                 style: TextStyle(
                   color: Colors.black,

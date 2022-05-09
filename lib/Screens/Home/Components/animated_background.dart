@@ -17,7 +17,7 @@ class AnimatedBackground extends StatelessWidget {
         curve: Curves.linear),
   ]);*/
 
-  AnimatedBackground({required this.child});
+  AnimatedBackground({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class AnimatedBackground extends StatelessWidget {
               ],
             ),
           ),
-          child: SafeArea(child: child),
+          child: child,
         );
       },
     );

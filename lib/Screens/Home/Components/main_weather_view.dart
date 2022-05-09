@@ -7,7 +7,8 @@ class MainWeatherView extends StatelessWidget {
   final double? min, max;
   final String? weather;
 
-  MainWeatherView({this.temp, this.min, this.max, this.weather});
+  const MainWeatherView({Key? key, this.temp, this.min, this.max, this.weather})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class MainWeatherView extends StatelessWidget {
         Center(
           child: Text(
             ' ${temp!.ceil()}°',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 150.0,
               fontWeight: FontWeight.w500,
             ),
@@ -25,20 +26,20 @@ class MainWeatherView extends StatelessWidget {
         Center(
           child: Text(
             parseWeatherDescriptionToEs(weather),
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 32.0,
               //color: Colors.white.withOpacity(0.7),
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         MinMaxTile(
           max: max,
           min: min,
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
       ],

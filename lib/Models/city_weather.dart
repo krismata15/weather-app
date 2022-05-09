@@ -1,3 +1,5 @@
+import 'package:equatable/equatable.dart';
+
 /// coord : {'lon':-66.8792,'lat':10.488}
 /// weather : [{'id':802,'main':'Clouds','description':'nubes dispersas','icon':'03d'}]
 /// base : 'stations'
@@ -27,7 +29,7 @@ class CityWeatherList {
   }
 }
 
-class CityWeather {
+class CityWeather extends Equatable {
   Coord? coord;
   List<Weather>? weather;
   String? base;
@@ -97,6 +99,9 @@ class CityWeather {
     map['cod'] = cod;
     return map;
   }
+
+  @override
+  List<Object?> get props => [coord, weather, base, main, visibility];
 }
 
 /// type : 2
@@ -225,7 +230,7 @@ class Main {
 /// description : 'nubes dispersas'
 /// icon : '03d'
 
-class Weather {
+class Weather extends Equatable {
   int? id;
   String? main;
   String? description;
@@ -248,6 +253,9 @@ class Weather {
     map['icon'] = icon;
     return map;
   }
+
+  @override
+  List<Object?> get props => [id, main, description, icon];
 }
 
 /// lon : -66.8792

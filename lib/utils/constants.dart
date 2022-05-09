@@ -1,3 +1,3 @@
 library constants;
 
-const SERVER_URL = 'http://10.0.2.2:8000/api';
+const serverUrl = 'http://localhost:8000/api';

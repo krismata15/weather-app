@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:weather_app/Models/city_weather.dart';
 
 abstract class WeatherSearchState {}

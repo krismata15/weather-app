@@ -4,7 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 class LocationText extends StatelessWidget {
   final String? city, countryCode;
 
-  LocationText({required this.city, required this.countryCode});
+  const LocationText({Key? key, required this.city, required this.countryCode})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +18,14 @@ class LocationText extends StatelessWidget {
             textAlign: TextAlign.center,
             text: TextSpan(
               style: GoogleFonts.openSans(
-                fontSize: 42.0,
+                fontSize: 38.0,
                 fontWeight: FontWeight.bold,
               ),
               children: [
                 TextSpan(text: '$city, '),
                 TextSpan(
                   text: countryCode,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 40,
                   ),
                 ),

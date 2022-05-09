@@ -5,7 +5,7 @@ import 'package:weather_app/Screens/Search/Components/search_result_tile.dart';
 class SearchResults extends StatelessWidget {
   final List<CityWeather>? cities;
 
-  SearchResults({required this.cities});
+  const SearchResults({Key? key, required this.cities}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

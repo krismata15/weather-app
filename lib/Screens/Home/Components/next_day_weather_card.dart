@@ -11,7 +11,7 @@ class NextDayWeatherCard extends StatelessWidget {
   final Daily forecastData;
   final DateFormat dateFormat = DateFormat('E dd MMMM', 'es');
 
-  NextDayWeatherCard({required this.forecastData});
+  NextDayWeatherCard({Key? key, required this.forecastData}) : super(key: key);
 
   String formatDateFromUnixTime() {
     DateTime dateTime =
@@ -22,7 +22,7 @@ class NextDayWeatherCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double cardWidth = MediaQuery.of(context).size.width * 0.28;
-    return Container(
+    return SizedBox(
       width: cardWidth,
       height: 190,
       child: ClipRRect(
@@ -34,7 +34,7 @@ class NextDayWeatherCard extends StatelessWidget {
             //height: 200.0,
             decoration: BoxDecoration(
               color: Colors.grey.shade200.withOpacity(0.5),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.transparent,
                   offset: Offset(0.0, 1.0), //(x,y)
@@ -45,16 +45,16 @@ class NextDayWeatherCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 6,
                 ),
                 Text(
                   formatDateFromUnixTime(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14.0,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 14,
                 ),
                 CircleAvatar(
@@ -63,8 +63,8 @@ class NextDayWeatherCard extends StatelessWidget {
                   child: CachedNetworkImage(
                     imageUrl:
                         'http://openweathermap.org/img/wn/${forecastData.weather!.first.icon}@2x.png',
-                    placeholder: (context, url) => CircleAvatar(),
-                    errorWidget: (context, url, error) => CircleAvatar(),
+                    placeholder: (context, url) => const CircleAvatar(),
+                    errorWidget: (context, url, error) => const CircleAvatar(),
                   ),
                 ),
                 /*Icon(
@@ -72,18 +72,18 @@ class NextDayWeatherCard extends StatelessWidget {
                   size: 60,
                   //color: Colors.amberAccent,
                 ),*/
-                SizedBox(
+                const SizedBox(
                   height: 6,
                 ),
                 Text(
                   ' ${forecastData.feelsLike!.day!.ceil()}°',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 26.0,
                   ),
                 ),
                 Text(
-                  '${parseWeatherDescriptionToEs(forecastData.weather!.first.main)}',
-                  style: TextStyle(
+                  parseWeatherDescriptionToEs(forecastData.weather!.first.main),
+                  style: const TextStyle(
                     fontSize: 14.0,
                   ),
                 ),

@@ -12,9 +12,6 @@ void handleDioErrors(DioError e) {
   }
 
   if (e.type == DioErrorType.response) {
-    print('DioErrorType.RESPONSE');
-    print(e.response!.data);
-
     throw ('Error obteniendo datos - Intente de nuevo');
   }
 
@@ -27,7 +24,6 @@ void handleDioErrors(DioError e) {
       if (e.toString().contains('SocketException')) {
         throw ('Error de conexión - Asegurese estar conectado a internet antes de continuar');
       } else {
-        print(e);
         throw ('Error obteniendo datos - Intente de nuevo');
       }
     }

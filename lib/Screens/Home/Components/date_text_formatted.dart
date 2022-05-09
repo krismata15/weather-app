@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DateTextFormatted extends StatelessWidget {
-  final String date =
-      DateFormat('EEEE dd MMMM yyyy', 'es').format(DateTime.now().toLocal());
+  const DateTextFormatted({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    final String date =
+        DateFormat('EEEE dd MMMM yyyy', 'es').format(DateTime.now().toLocal());
     return Text(
       date,
       style: TextStyle(

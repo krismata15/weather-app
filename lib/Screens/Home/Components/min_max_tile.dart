@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class MinMaxTile extends StatelessWidget {
   final double? min, max;
   final bool center;
-  MinMaxTile({this.min, this.max, this.center = true});
+  const MinMaxTile({Key? key, this.min, this.max, this.center = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,39 +16,39 @@ class MinMaxTile extends StatelessWidget {
         ),
         Row(
           children: [
-            Icon(
+            const Icon(
               Icons.arrow_drop_down_sharp,
               size: 30,
               //color: Colors.white,
             ),
             Text(
               '${min!.ceil()}°',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18.0,
               ),
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         Row(
           children: [
-            Icon(
+            const Icon(
               Icons.arrow_drop_up_sharp,
               size: 30,
               //color: Colors.white,
             ),
             Text(
               '${max!.ceil()}°',
-              style: TextStyle(
+              style: const TextStyle(
                 //color: Colors.white,
                 fontSize: 18.0,
               ),
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           width: 18,
         ),
       ],

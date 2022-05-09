@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-class LoadingDataComponent extends StatelessWidget {
-  final String? title;
-
-  const LoadingDataComponent({Key? key, this.title}) : super(key: key);
+class GettingInitialDataComponent extends StatelessWidget {
+  const GettingInitialDataComponent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +13,12 @@ class LoadingDataComponent extends StatelessWidget {
             'assets/images/clima_1.png',
             scale: 3,
           ),
-          Text(
-            title ?? 'Obteniendo datos',
+          const Text(
+            'Obteniendo información inicial',
             textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
           const SizedBox(
             height: 12,
